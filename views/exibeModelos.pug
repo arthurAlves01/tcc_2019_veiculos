@@ -1,0 +1,14 @@
+head
+    link(href="/css/main.css" rel="stylesheet")
+
+body
+    table
+        thead
+            tr
+                each v in h
+                    td #{v}
+        tbody
+            each m in modelos
+                tr
+                    each val in m
+                        td #{val}

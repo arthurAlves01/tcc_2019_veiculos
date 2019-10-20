@@ -1,0 +1,15 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "Portal para inserir dados das motos no banco de dados",
+  "main": "index.js",
+  "dependencies": {
+    "npm": "^6.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

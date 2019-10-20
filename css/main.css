@@ -1,0 +1,35 @@
+* {
+    font-family: "Roboto", sans-serif;
+}
+div.campo {
+    margin: 3px 0;
+    padding: 4px;
+    width: 390px;
+}
+div.campo:nth-child(odd) {
+    background: #ddd;
+}
+input {
+    width: 180px;
+}
+label {
+    color: #333;
+    width: 200px;
+    display: inline-block;
+    margin: 2px 0;
+}
+table {
+    font-size: 10px;
+    width: 1400px;
+    overflow-x: auto;
+    border-collapse: collapse;
+}
+table thead {
+    background: #bbb;
+}
+table td {
+    border: 1px solid #ccc;
+}
+table tbody td {
+    width: 50px;
+}
