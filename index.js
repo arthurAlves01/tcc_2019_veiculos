@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const crud = require("./crud.js") //Funções do db que retornam promisses
 const session = require("express-session")
+const api = require("./api.js")
 
 app.set('view engine', 'pug')
 app.use(express.json());
@@ -12,6 +13,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: { secure: false }
 }))
+
+app.use("/api", api)
 
 app.get(["/","/*"], (req, res, next) => {
     if(req.session.loggedin||req.path.substring(0,5)=="/css/"||req.path.substring(0,5)=="/script/") {
@@ -64,7 +67,7 @@ app.get("/listar/modelos", (req,res) => {
   let headers = [
     'Usuário Cadastro','ID', 'Modelo','Montadora','Ano Fab.','Cores','Tipo Chassi','Susp. Diant.','Susp. Trase.','Pn. Diant.','Pn. Tras.','Freio Diant.','Freio Trase.','Tipo Freio','Qtd. Cili.',
     'Diametro', 'Curso','Cilindrada','Pot. Max.','Torque Max.','Sist. Parti.','Tp. Alim.','Comb.','Sist. Trans.','Cambio','Bateria','Tx. Compres.','Comprimento','Largura','Altura',
-    'Dist. Eixos','Dist. Solo','Alt. Solo','Tq. Comb.','Peso'
+    'Dist. Eixos','Dist. Solo','Alt. Solo','Tq. Comb.','Peso','Arquivo Foto'
   ]
   crud.listaVeiculos()
     .then((data) => {
@@ -89,7 +92,6 @@ app.post("/add/montadora", (req,res) => {
             res.send(err)
         })
 })
-
 
 app.use(express.static(__dirname))
 

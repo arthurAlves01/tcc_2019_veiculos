@@ -13,7 +13,8 @@ body
         label(for="montadora") Montadora
         select(id="montadora" name="montadora")
             each v in montadoras
-                option(value=v.id) #{v.nome}        
+                option(value=v.id) #{v.nome}     
+    <div class="campo"><label for="arqFoto">Nome Arquivo Foto: </label><input id="arqFoto" name="arqFoto" type="text" autocomplete="off"></div>
     <div class="campo"><label for="nomeModelo">Nome do Modelo: </label><input id="nomeModelo" name="nomeModelo" type="text" autocomplete="off"></div>
     <div class="campo"><label for="anoFabricacao">Ano de Fabricação: </label><input id="anoFabricacao" name="anoFabricacao" type="text" autocomplete="off"></div>
     <div class="campo"><label for="cores">Cores: </label><input id="cores" name="cores" type="text" autocomplete="off"></div>
