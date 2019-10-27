@@ -78,6 +78,22 @@ function validaLogin(u,s) {
         })
     })
 }
+//Funcções utilizadas pela API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
 module.exports = {
     addMontadora: addMontadora,
     addVeiculo: addVeiculo,

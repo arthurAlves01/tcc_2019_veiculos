@@ -1,5 +1,35 @@
-label {
+* {
+    font-family: Roboto, sans-serif
+}
+form {
+    margin: 0;
+}
+fieldset {
     display: inline-block;
-    width: 120px;
+    width: 100%;
     margin: 5px 0;
+    border: none;
+    box-sizing: border-box;
+    padding: 0px;
+}
+input.dados {
+    padding: 4px;
+    width: 100%
+}
+input.enviar {
+    width: 100%;
+    padding: 6px;
+    margin: 10px auto 10px;
+}
+div.login_wrap {
+    width: 300px;
+    padding: 10px 20px;
+    border: 2px solid #a44;
+    border-radius: 8px;
+    margin: 40px auto 0;
+}
+div.login_wrap:after {
+    display: block;
+    clear: both;
+    content: "";
 }
