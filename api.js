@@ -4,7 +4,7 @@ const crud = require("./crud.js") //Funções do db que retornam promisses
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-router.get("/busca/", (req,res) => {
+router.get("/busca", (req,res) => {
     //Teste da URL
     //http://localhost/api/busca?key=teste&fabricante=honda&modelo=forza%20250&ano=2005
     res.setHeader('Content-Type', 'application/json');
