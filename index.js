@@ -3,10 +3,13 @@ const app = express();
 const crud = require("./crud.js") //Funções do db que retornam promisses
 const session = require("express-session")
 const api = require("./api.js")
+const path = require("path")
 
 app.set('view engine', 'pug')
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
   secret: '9pf48z74ur',
   resave: false,
@@ -14,10 +17,13 @@ app.use(session({
   cookie: { secure: false }
 }))
 
+app.use("/css", express.static("css"))
+app.use("/img", express.static("img"))
+app.use("/script", express.static("script"))
 app.use("/api", api)
 
 app.get(["/","/*"], (req, res, next) => {
-    if(req.session.loggedin||req.path.substring(0,5)=="/css/"||req.path.substring(0,5)=="/script/") {
+    if(req.session.loggedin) {
         next()
     } else {
         res.render("login")
@@ -93,7 +99,7 @@ app.post("/add/montadora", (req,res) => {
         })
 })
 
-app.use(express.static(__dirname))
+//app.use(express.static(__dirname))
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');

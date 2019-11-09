@@ -1,5 +1,15 @@
 const sql = require("sqlite3")
 const db = new sql.Database("portal.db")
+const fs = require('fs');
+const path = require("path");
+
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer.from(bitmap).toString('base64');
+}
 
 function addMontadora(montadora) {
     return new Promise((resolve,reject) => {
@@ -79,25 +89,68 @@ function validaLogin(u,s) {
     })
 }
 //Funcções utilizadas pela API
+function buscaFabricantes() {
+    return new Promise((resolve,reject) => {
+        let sql = "select nome from tbMontadoras";
+        let stm = db.prepare(sql);
+        stm.all((err, rows) => {
+            if(err) reject("1")
+            if(rows==false) reject("2")
+            else resolve(rows)
+        })
+    })
+}
+function buscaModelos(_mon) {
+    return new Promise((resolve,reject) => {
+        let sql_busca_id_montadora = "select id from tbMontadoras where nome = ?"
+        let stm = db.prepare(sql_busca_id_montadora)
+        stm.get([_mon], (err, row) => {
+            if(err) reject("1")
+            else if(row==undefined) reject("3")
+            else {
+                let sql_busca_veiculos = "select idmontadora, id, nomemodelo, anofabricacao from tbInfoVeiculo where idmontadora = ?";
+                let stm = db.prepare(sql_busca_veiculos)
+                stm.all([row.id], (err, rows) => {
+                    if(err) reject("1")
+                    else if(rows==false) reject("4")
+                    else resolve(rows)
+                })
+            }
+        })
+    })
+}
+function buscaDadosVeiculo(_mon,_mod,_ano) {
+    return new Promise((resolve,reject) => {
+        let sql_busca_id_montadora = "select id from tbMontadoras where nome = ?"
+        let stm = db.prepare(sql_busca_id_montadora)
+        stm.get([_mon], (err, row) => {
+            if(err) reject("1")
+            else if(row==undefined) reject("3")
+            else {
+                let sql = "select * from tbInfoVeiculo where idmontadora = ? and nomemodelo = ? and anofabricacao = ?"
+                let stm = db.prepare(sql)
+                stm.get([row.id, _mod,_ano], (err, row) => {
+                    if(err) reject("1")
+                    else if(row==undefined) reject("5")
+                    else {
+                        row.arqFoto = base64_encode(path.join(__dirname, "/fotos", row.arqFoto));
+                        resolve(row)
+                    }
+                })
+            }
+        })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+    })
+}
 //
 module.exports = {
     addMontadora: addMontadora,
     addVeiculo: addVeiculo,
     listaVeiculos: listaVeiculos,
     validaLogin: validaLogin,
-    listaMontadoras: listaMontadoras
+    listaMontadoras: listaMontadoras,
+    buscaFabricantes: buscaFabricantes,
+    buscaModelos: buscaModelos,
+    buscaDadosVeiculo: buscaDadosVeiculo
 };

@@ -4,20 +4,31 @@ const crud = require("./crud.js") //Funções do db que retornam promisses
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-router.get("/busca", (req,res) => {
-    //Teste da URL
-    //http://localhost/api/busca?key=teste&fabricante=honda&modelo=forza%20250&ano=2005
-    res.setHeader('Content-Type', 'application/json');
-    let _apiKey = "djxwj3qr3usu34s";
-    let _key = req.query.key;
-    let _fab = req.query.fabricante;
-    let _mod = req.query.modelo;
-    let _ano = req.query.ano;
-    if(_key!=_apiKey) {
-        res.json({"msg":"chave_invalida","errn":"1"});
-        return;
+
+router.get("/busca", mainFunc)
+router.get("/busca/montadora/:montadora", mainFunc)
+router.get("/busca/montadora/:montadora/modelo/:modelo/ano/:ano", mainFunc)
+
+function getErro(n) {
+    let ERROS = {
+        "1":"database_error",//Erro de execução da query
+        "2":"notfound_lista_montadoras",//Nenhuma montadora encontrada
+        "3":"notfound_dados_montadora",//Montadora não encontrada no banco de dados
+        "4":"notfound_lista_veiculos",//Nenhum veiculo encontrado cadastrado com essa montadora
+        "5":"notfound_dados_veiculo"//Nenhum veiculo encontrado com os dados informados
     }
-    if(_fab==undefined) {
+    return {
+        "errn": n,
+        "msg": ERROS[n]
+    }
+}
+function mainFunc(req,res) {
+
+    res.setHeader('Content-Type', 'application/json');
+    let _mon = req.params.montadora;
+    let _mod = req.params.modelo;
+    let _ano = req.params.ano;
+    if(_mon==undefined) {
         //retornar lista de fabricantes
         crud.buscaFabricantes()
         .then(
@@ -27,42 +38,32 @@ router.get("/busca", (req,res) => {
         )
         .catch(
             (err) => {
-                res.json({"err":err,"errn":"2"})
+                res.json(getErro(err))
             }
         )
         return;
     }
     if(_mod==undefined) {
         //retornar lista de modelos da fabricante
-        crud.buscaModelos(_fab)
+        crud.buscaModelos(_mon)
         .then(
             (data) => {
-                res.send(data)
+                res.json(data)
             }
         )
         .catch(
             (err) => {
-                res.json({"err":err,"errn":"3"})
+                res.json(getErro(err))
             }
         )
         return;
     }
     if(_ano==undefined) {
-        //retornar lista com todos os anos de fabricação do modelo
-        crud.buscaAnomodelo(_fab,_mod)
-        .then(
-            (data) => {
-                res.send(data)
-            }
-        )
-        .catch(
-            (err) => {
-                res.json({"err":err,"errn":"4"})
-            }
-        )
+        //Erro se não informar o ano modelo
+        res.json(getErro(err))
         return;
     }
-    crud.buscaDadosVeiculo(_fab,_mod,_ano)
+    crud.buscaDadosVeiculo(_mon,_mod,_ano)
         .then(
             (data) => {
                 res.send(data)
@@ -70,12 +71,9 @@ router.get("/busca", (req,res) => {
         )
         .catch(
             (err) => {
-                res.json({"err":err,"errn":"5"})
+                res.json(getErro(err))
             }
         )
-})
-router.get("/*", (req,res) => {
-    res.json({"msg":"teste api"})
-})
+}
 
 module.exports = router;
