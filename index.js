@@ -22,16 +22,22 @@ app.use("/img", express.static("img"))
 app.use("/script", express.static("script"))
 app.use("/api", api)
 
+app.get("/login", (req,res) => {
+    res.render("login")
+})
+
 app.get(["/","/*"], (req, res, next) => {
     if(req.session.loggedin) {
         next()
     } else {
-        res.render("login")
+        res.redirect("/login")
     }
 })
 
 app.get("/",(req,res) => {
-    res.render("home", {user: req.session.username})
+    let usuario = req.session.username.toLowerCase();
+    usuario = usuario[0].toUpperCase() + usuario.substr(1)
+    res.render("home", {user: usuario})
 })
 
 app.post("/login", (req,res) => {
@@ -51,12 +57,13 @@ app.post("/login", (req,res) => {
 app.get("/cadastraVeiculo", (req,res) => {
     crud.listaMontadoras()
         .then((data) => {
-            res.render("cadastraVeiculo", {montadoras: data, usuario: req.session.username})
+            res.render("cadastraModelo", {montadoras: data, usuario: req.session.username})
         })
         .catch((err) => {
             res.send(err)
         })
 })
+
 app.post("/add/veiculo", (req,res) => {
     let dados = req.body;
     crud.addVeiculo(dados, req.session.username)
@@ -67,7 +74,6 @@ app.post("/add/veiculo", (req,res) => {
             res.send(err)
         })
 })
-
 
 app.get("/listar/modelos", (req,res) => {
   let headers = [
@@ -95,7 +101,7 @@ app.post("/add/montadora", (req,res) => {
             res.render("confirmaMontadora", {nomeMontadora: data})
         })
         .catch((err) => {
-            res.send(err)
+            res.render("montadoraJaCadastrada")
         })
 })
 

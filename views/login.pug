@@ -1,13 +1,17 @@
-head
-    link(href="/css/loginStyle.css" rel="stylesheet")
-div(class="login_wrap")
-    form(action="/login" method="post")
-        fieldset
-            legend Usuário
-            input(type="text" name="user" class="dados")
-        br
-        fieldset
-            legend Senha
-            input(type="password" name="pw" class="dados")
-        br
-        input(type="submit" class="enviar")
+extends layout
+
+block contentSrc
+    link(href="/css/login.css" rel="stylesheet")
+
+block content
+    div(class="login_wrap")
+        form(action="/login" method="post")
+            fieldset
+                legend Usuário
+                input(type="text" name="user" class="dados")
+            br
+            fieldset
+                legend Senha
+                input(type="password" name="pw" class="dados")
+            br
+            input(type="submit" class="enviar")

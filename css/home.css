@@ -1,0 +1,29 @@
+div#menu {
+    width: 40%;
+    margin: 0 auto;
+}
+h1 {
+    text-align: center;
+}
+div#listaOpt {
+    width: 100%
+}
+div#listaOpt a {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    border: 2px solid #883333;
+    background: #bb3333;
+    margin-bottom: -2px;
+    color: white;
+}
+div#listaOpt a:visited {
+    color: white;
+}
+div#listaOpt a:hover {
+    background: rgb(150, 55, 55);
+}
+div#listaOpt a:active {
+    background: #662222;
+}

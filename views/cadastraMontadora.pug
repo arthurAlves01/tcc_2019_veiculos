@@ -1,8 +1,10 @@
-head
+extends layout.pug
+
+block contentSrc
     link(href="https://fonts.googleapis.com/css?family=Roboto&display=swap", rel="stylesheet")
     link(href="/css/cadastraMontadora.css" rel="stylesheet")
 
-body    
+block content
     h2 Cadastro de Montadoras
     form(action="/add/montadora" method="post")
         label(for="nomeMontadora") Nome da Montadora
