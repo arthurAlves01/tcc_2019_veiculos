@@ -4,12 +4,18 @@
   "description": "Portal para inserir dados das motos no banco de dados",
   "main": "index.js",
   "dependencies": {
-    "npm": "^6.9.0"
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "npm": "^6.9.0",
+    "pug": "^2.0.4",
+    "sqlite3": "^4.1.0",
+    "supervisor": "^0.12.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": "github:https://github.com/arthurAlves01/tcc_2019_veiculos.git"
 }
