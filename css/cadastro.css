@@ -7,6 +7,14 @@ label {
 div#formCadastro {
     width: 800px;
 }
+div#wrapCampos {
+
+}
+div#wrapCampos:after {
+    content: "";
+    display: block;
+    clear: both;
+}
 div.campo {
     width: 48%;
     float: left;
@@ -24,5 +32,22 @@ input[type=text] {
 }
 input[type=text]:focus {
     background: #eee;
+    outline-width: 0;
+}
+input[type=submit] {
+    border: 2px solid #883333;
+    background: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    width: 120px;
+    margin-left: 6px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background: #aa2222;
+    color: white;
+}
+input[type=submit]:focus {
     outline-width: 0;
 }

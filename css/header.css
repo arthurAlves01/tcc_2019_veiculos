@@ -3,8 +3,38 @@ div#header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 100px;
+    background: #00000009;
+}
+div#header:after {
+    content: "";
+    display: block;
+    clear: both;
 }
 div#header img#headerLogo {
-    height: 60px;
+    height: 100%;
+    float: left;
+}
+div#header div#headerMenu {
+    float: right;
+    width: 200px;
+    height: 100%;
+    padding: 20px;
+}
+div#header div#headerMenu a {
+    color: #bb3333;
+    display: block;
+    margin-bottom: 5px;
+    padding: 4px;
+    text-align: right;
+    text-decoration: none;
+}
+div#header div#headerMenu a:visited {
+    color: #bb3333;
+}
+div#header div#headerMenu a:hover {
+    color: #ff3333;
+}
+div#header div#headerMenu a:active {
+    color: #991111;
 }
