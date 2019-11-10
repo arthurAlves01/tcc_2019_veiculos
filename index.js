@@ -6,14 +6,12 @@ const api = require("./api.js")
 const path = require("path")
 const c = require("crypto")
 
-
 function getSha256(v) {
     let md5 = crypto.createHash("md5")
     md5.update(v);
     let _hash = md5.digest("hex")
     return _hash;
 }
-
 
 app.set('view engine', 'pug')
 
