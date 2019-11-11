@@ -4,15 +4,33 @@ const crud = require("./crud.js") //Funções do db que retornam promisses
 const session = require("express-session")
 const api = require("./api.js")
 const path = require("path")
-const c = require("crypto")
+const nodemailer = require('nodemailer');
 
-function getSha256(v) {
-    let md5 = crypto.createHash("md5")
-    md5.update(v);
-    let _hash = md5.digest("hex")
-    return _hash;
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'guiamotos.suporte@gmail.com',
+        pass: 'tcc@2019'
+    }
+});
+
+function enviarEmailSenha(e,s) {
+    return new Promise((resolve,reject) => {
+        var mailOptions = {
+            from: 'guiamotos.suporte@gmail.com',
+            to: e.email,
+            subject: 'Nova senha! - GuiaMotosCadastro',
+            text: 'Sua nova senha GuiaMotosCadastro: ' + s
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                reject(new Error(error));
+            } else {
+                resolve("email_enviado");
+            }
+        });
+    })
 }
-
 app.set('view engine', 'pug')
 
 app.use(express.json());
@@ -29,6 +47,37 @@ app.use("/css", express.static("css"))
 app.use("/img", express.static("img"))
 app.use("/script", express.static("script"))
 app.use("/api", api)
+
+app.post("/recuperaSenha", (req,res) => {
+    let u = req.body.u;
+    if(u==undefined) {res.json(JSON.stringify({"msg":"informe_usuario"}))}
+    crud.recuperaSenha(u)
+    .then((data) => {
+        return enviarEmailSenha(...data)
+    })
+    .then((data) => {
+        res.json(JSON.stringify({"msg": data}))
+    })
+    .catch((err) => {
+        console.log(err.message)
+        res.status(500).json(JSON.stringify({"msg": err.message}))
+    })
+})
+
+app.post("/cadastro", (req,res) => {
+    let u = req.query.u;
+    let s = req.query.s;
+    let e = req.query.e;
+    if(e==undefined||s==undefined||e==undefined) {res.send("informe_dados_cadastro");return}
+    if(u.length<5) {res.send("nome_usuario_min_cinco_char");return}
+    crud.cadastraUsuario(u,s,e).
+    then((data) => {
+        res.send(data)
+    }) 
+    .catch((err) => {
+        res.send(err.message)
+    })
+})
 
 app.get("/login", (req,res) => {
     if(req.session.loggedin) {
@@ -162,6 +211,7 @@ app.get("/sair", (req,res) => {
     })
 })
 //app.use("/",) 404
+
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');

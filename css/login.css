@@ -30,3 +30,11 @@ div.login_wrap:after {
     clear: both;
     content: "";
 }
+p#recuperaSenha {
+    margin: 0;
+    color: #3333aa;
+    cursor: pointer;
+}
+p#recuperaSenha:hover {
+    text-decoration: underline;
+}

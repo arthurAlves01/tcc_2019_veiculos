@@ -3,9 +3,12 @@ head
     link(href="/css/layout.css" rel="stylesheet" type="text/css")
     link(href="/css/header.css" rel="stylesheet" type="text/css")
     link(href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet")
+    script(src="/script/jquery.js")
     block contentSrc
 body
     include includes/header.pug
     div(id="globalWrap")
         block content
     <script> </script>
+    block contentScripts
+    

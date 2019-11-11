@@ -8,10 +8,13 @@ block content
         form(action="/login" method="post")
             fieldset
                 legend Usuário
-                input(type="text" name="user" class="dados")
+                input(type="text" name="user" class="dados" id="user")
             br
             fieldset
                 legend Senha
-                input(type="password" name="pw" class="dados")
+                input(type="password" name="pw" class="dados" id="pw")
             br
             input(type="submit" class="enviar")
+            p(id="recuperaSenha") Recuperar Senha
+block contentScripts
+    script(src="/script/login.js")
