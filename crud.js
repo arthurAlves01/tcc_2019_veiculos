@@ -5,6 +5,11 @@ const path = require("path");
 const c = require("crypto")
 
 //Criptografa o parametro informado como sha256
+//@exemplo
+//  getSha256("abc"); //ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+//
+//@param    {string}    v   valor que será criptografado
+//@returns  {string}
 function getSha256(v) {
     let md5 = c.createHash("sha256")
     md5.update(v);
@@ -12,8 +17,12 @@ function getSha256(v) {
     return _hash;
 }
 
-//Cria senha aleatoria com a quantidade de caracteres do parametro l
+//Cria senha aleatoria com a quantidade de caracteres do parametro l e apenas com caracteres alfanumericos
+//@exemplo
+//  makepw(2); //a5
 //
+//@param    {number}    l  numero de caracteres da senha gerada
+//@returns  {string}
 function makepw(l) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -129,7 +138,7 @@ function listaModelos(){
 //Retorna montadoras cadastradas
 function listaMontadoras() {
     return new Promise((resolve,reject) => {
-        db.all("Select * from tbMontadoras", (err,data) => {
+        db.all("Select * from tbMontadoras order by nome", (err,data) => {
             if(err) {
                 reject(err)
             }
@@ -166,6 +175,18 @@ function buscaFabricantes() {
             if(err) reject("1")
             if(rows==false) reject("2")
             else resolve(rows)
+        })
+    })
+}
+
+function validaModelo(montadora, nomeModelo, anoFabricacao) {
+    return new Promise((resolve,reject) => {
+        let sql = "select id from tbInfoVeiculo where idmontadora = ? and nomeModelo = ? and anofabricacao = ?"
+        let stm = db.prepare(sql)
+        stm.get([montadora, nomeModelo, anoFabricacao], (err, row) => {
+            if(err) reject(new Error(err))
+            else if(row!==undefined) reject(false)
+            else resolve(true)
         })
     })
 }
@@ -222,5 +243,6 @@ module.exports = {
     buscaModelos: buscaModelos,
     buscaDadosVeiculo: buscaDadosVeiculo,
     cadastraUsuario: cadastraUsuario,
-    recuperaSenha: recuperaSenha
+    recuperaSenha: recuperaSenha,
+    validaModelo: validaModelo
 };

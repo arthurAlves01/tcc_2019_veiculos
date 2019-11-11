@@ -50,3 +50,20 @@ input[type=submit]:hover {
 input[type=submit]:focus {
     outline-width: 0;
 }
+button.enviar {
+    border: 2px solid #883333;
+    background: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    width: 120px;
+    margin-left: 6px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+button.enviar:hover {
+    background: #aa2222;
+    color: white;
+}
+button.enviar:focus {
+    outline-width: 0;
+}

@@ -108,14 +108,30 @@ app.post("/login", (req,res) => {
         .then(() => {
             req.session.username = user;
             req.session.loggedin = true;
-            res.status(200).redirect("/")
+            res.sendStatus(200)
         })
         .catch((err) => {
-            res.sendStatus(err)
+            console.log(err)
+            res.sendStatus(403)
         })
 })
 
-app.get("/cadastraVeiculo", (req,res) => {
+app.get("/validaModelo", (req,res) => {
+    let montadora = req.query.montadora;
+    let nomeModelo = req.query.nomeModelo;
+    let anoFabricacao = req.query.anoFabricacao;
+    //console.log
+    if(!(montadora&&nomeModelo&&anoFabricacao)) {res.status(400).send("informe_dados"); return};
+    crud.validaModelo(montadora,nomeModelo,anoFabricacao)
+    .then((data) => {
+        res.status(200).send("ok")
+    })
+    .catch((err) => {
+        res.status(400).send("modelo_cadastrado");
+    })
+})
+
+app.get("/cadastraModelo", (req,res) => {
     function campo(id, texto) {
         this.id = id;
         this.texto = texto;
@@ -164,11 +180,11 @@ app.get("/cadastraVeiculo", (req,res) => {
         })
 })
 
-app.post("/add/veiculo", (req,res) => {
+app.post("/add/modelo", (req,res) => {
     let dados = req.body;
     crud.addVeiculo(dados, req.session.username)
         .then((data) => {
-            res.render("confirmaVeiculo", {nomeVeiculo: data})
+            res.render("confirmaModelo", {nomeVeiculo: data})
         })
         .catch((err) => {
             res.send(err)

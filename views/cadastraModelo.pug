@@ -6,7 +6,7 @@ block contentSrc
 block content
     div(id="formCadastro")
         h2 Cadastro de Modelos
-        form(action="/add/veiculo" method="post" onsubmit="return validaForm()")
+        form(action="/add/modelo" method="POST" id="cadastro")
             div(id="wrapCampos")
                 div(class="campo")  
                     label(for="user") Usuário
@@ -20,7 +20,5 @@ block content
                     div(class="campo")
                         label(for=v.id) #{v.texto}
                         input(id=v.id name=v.id type="text" autocomplete="off")
-            input(type="submit" value="Cadastrar")
-        </form>
-    script(src="/jquery.js")
-    script(src="/script/main.js")
+            button(class="enviar" id="submeter") Cadastrar
+    script(src="/script/cadastroModelo.js")

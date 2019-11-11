@@ -1,4 +1,4 @@
-form {
+div#formLogin {
     margin: 0;
 }
 fieldset {
@@ -13,7 +13,7 @@ input.dados {
     padding: 4px;
     width: 100%
 }
-input.enviar {
+button.enviar {
     width: 100%;
     padding: 6px;
     margin: 10px auto 10px;

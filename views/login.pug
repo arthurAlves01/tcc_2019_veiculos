@@ -5,7 +5,7 @@ block contentSrc
 
 block content
     div(class="login_wrap")
-        form(action="/login" method="post")
+        div(id="formLogin")
             fieldset
                 legend Usuário
                 input(type="text" name="user" class="dados" id="user")
@@ -14,7 +14,7 @@ block content
                 legend Senha
                 input(type="password" name="pw" class="dados" id="pw")
             br
-            input(type="submit" class="enviar")
+            button(class="enviar" id="enviarLogin") Enviar
             p(id="recuperaSenha") Recuperar Senha
 block contentScripts
     script(src="/script/login.js")
