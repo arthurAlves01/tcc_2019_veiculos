@@ -6,9 +6,8 @@ label {
 }
 div#formCadastro {
     width: 800px;
-}
-div#wrapCampos {
-
+    height: 100%;
+    overflow-y: overlay;
 }
 div#wrapCampos:after {
     content: "";
