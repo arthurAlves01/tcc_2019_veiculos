@@ -107,7 +107,7 @@ function addVeiculo(dados, usuario){
 }
 
 //Retorna dados dos veiculos cadastrados
-function listaVeiculos(){
+function listaModelos(){
     return new Promise((resolve,reject) => {
         let qry = `
         select 
@@ -214,7 +214,7 @@ function buscaDadosVeiculo(_mon,_mod,_ano) {
 module.exports = {
     addMontadora: addMontadora,
     addVeiculo: addVeiculo,
-    listaVeiculos: listaVeiculos,
+    listaModelos: listaModelos,
     validaLogin: validaLogin,
     listaMontadoras: listaMontadoras,
     buscaFabricantes: buscaFabricantes,

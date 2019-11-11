@@ -83,7 +83,7 @@ app.get("/login", (req,res) => {
     if(req.session.loggedin) {
         res.redirect("/")
     } else {
-        res.render("login")
+        res.render("login", {"off": true})
     }
 })
 
@@ -181,7 +181,7 @@ app.get("/listar/modelos", (req,res) => {
     'Diametro', 'Curso','Cilindrada','Pot. Max.','Torque Max.','Sist. Parti.','Tp. Alim.','Comb.','Sist. Trans.','Cambio','Bateria','Tx. Compres.','Comprimento','Largura','Altura',
     'Dist. Eixos','Dist. Solo','Alt. Solo','Tq. Comb.','Peso','Arquivo Foto'
   ]
-  crud.listaVeiculos()
+  crud.listaModelos()
     .then((data) => {
         res.render('exibeModelos', {modelos: data, h: headers})
     })
@@ -189,6 +189,19 @@ app.get("/listar/modelos", (req,res) => {
         res.send(err)
     })
 })
+
+app.get("/listar/montadoras", (req,res) => {
+    let headers = [
+      'ID Montadora','Nome Montadora'
+    ]
+    crud.listaMontadoras()
+      .then((data) => {
+          res.render('exibeMontadoras', {montadoras: data, h: headers})
+      })
+      .catch((err) => {
+          res.send(err)
+      })
+  })
 
 app.get("/cadastraMontadora", (req,res) => {
     res.render("cadastraMontadora")

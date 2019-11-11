@@ -1,6 +1,7 @@
 div(id="header")
     a(href="/")
         img(src="/img/logo.png" id="headerLogo")
-    div(id="headerMenu")
-        a(href="/") Página Inicial
-        a(href="/sair") Sair
+    if !off
+        div(id="headerMenu")
+            a(href="/") Página Inicial
+            a(href="/sair") Sair

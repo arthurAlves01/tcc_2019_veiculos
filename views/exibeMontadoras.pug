@@ -2,7 +2,7 @@ extends layout.pug
 
 block contentSrc
     link(href="/css/tabelas.css" rel="stylesheet")
-
+    
 block content
     table(id="dadosCadastrados")
         thead
@@ -10,7 +10,7 @@ block content
                 each v in h
                     td #{v}
         tbody
-            each m in modelos
+            each m in montadoras
                 tr
                     each val in m
                         td #{val}
