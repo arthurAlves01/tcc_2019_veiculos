@@ -33,12 +33,12 @@ function mainFunc(req,res) {
         crud.buscaFabricantes()
         .then(
             (data) => {
-                res.send(data)
+                res.status(200).send(data)
             }
         )
         .catch(
             (err) => {
-                res.json(getErro(err))
+                res.status(400).json(getErro(err))
             }
         )
         return;
@@ -48,12 +48,12 @@ function mainFunc(req,res) {
         crud.buscaModelos(_mon)
         .then(
             (data) => {
-                res.json(data)
+                res.status(200).json(data)
             }
         )
         .catch(
             (err) => {
-                res.json(getErro(err))
+                res.status(400).json(getErro(err))
             }
         )
         return;
@@ -66,12 +66,12 @@ function mainFunc(req,res) {
     crud.buscaDadosVeiculo(_mon,_mod,_ano)
         .then(
             (data) => {
-                res.send(data)
+                res.status(200).send(data)
             }
         )
         .catch(
             (err) => {
-                res.json(getErro(err))
+                res.status(400).json(getErro(err))
             }
         )
 }
