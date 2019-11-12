@@ -224,7 +224,7 @@ function buscaDadosVeiculo(_mon,_mod,_ano) {
                     if(err) reject("1")
                     else if(row==undefined) reject("5")
                     else {
-                        row.arqFoto = base64_encode(path.join(__dirname, "/fotos", _mon, row.arqFoto));
+                        row.arqFoto = base64_encode(path.join(__dirname, "/fotos", row.arqFoto));
                         resolve(row)
                     }
                 })
