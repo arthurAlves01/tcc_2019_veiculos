@@ -42,7 +42,9 @@ function base64_encode(file) {
         return false;
     }
 }
-//Retorna o e-mail de cadastro do usuario
+//Retorna promise com resultado da consulta
+//@exemplo
+//  recuperaSenha
 function recuperaSenha(u) {
     return new Promise((resolve,reject) => {
         let sqlValida = "SELECT EMAIL from tbUser where user = ?"
@@ -199,12 +201,16 @@ function buscaModelos(_mon) {
             if(err) reject("1")
             else if(row==undefined) reject("3")
             else {
-                let sql_busca_veiculos = "select idmontadora, id, nomemodelo, anofabricacao from tbInfoVeiculo where idmontadora = ?";
+                let sql_busca_veiculos = "select idmontadora, id, nomemodelo, anofabricacao, arqFoto from tbInfoVeiculo where idmontadora = ?";
                 let stm = db.prepare(sql_busca_veiculos)
                 stm.all([row.id], (err, rows) => {
                     if(err) reject("1")
                     else if(rows==false) reject("4")
-                    else resolve(rows)
+                    else {
+                        rows.forEach((i) => {
+                            i.arqFoto = base64_encode(path.join(__dirname, "/fotos", i.arqFoto));
+                        })
+                    resolve(rows)}
                 })
             }
         })
